@@ -31,7 +31,7 @@ _Clone the repository or checkout with subversion to get a copy of zlang-interpr
 
 ```bash
 $ git clone https://github.com/zhooda/zlang-interpreter
-$ cd almost-blockchain-two
+$ cd zlang-interpreter
 $ make
 ```
 </details>
@@ -49,6 +49,8 @@ PS> go build -v -o .\bin\z.exe main.go
 When running abc2 on windows using the commands outlined below, replace `./bin/z` with `.\bin\z.exe` and you'll be good to go :)
 
 </details>
+
+---
 
 ### Usage
 
