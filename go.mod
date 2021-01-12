@@ -1,3 +1,3 @@
-module github.com/zhooda/zlang-interpreter
+module zlang
 
 go 1.15
