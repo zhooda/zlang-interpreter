@@ -15,7 +15,7 @@ on your local machine. There are no deployment strategies right now `:~)`
 
 ### Prerequisites
 
-To run almost-blockchain-two you will need:
+To run zlang-interpreter you will need:
 
 - [golang](https://golang.org/) v1.15+
 
@@ -23,7 +23,7 @@ On linux you will also need `build-essential` to be able to use the `make` comma
 
 ### Installation
 
-_Clone the repository or checkout with subversion to get a copy of almost-blockchain-two_
+_Clone the repository or checkout with subversion to get a copy of zlang-interpreter_
 
 <details open>
 <summary><b>Linux/macOS</b></summary>
@@ -62,4 +62,4 @@ z>
 ```
 
 ## License
-almost-blockchain-two uses the [MIT](https://choosealicense.com/licenses/mit/) license `:~)`
+zlang-interpreter uses the [MIT](https://choosealicense.com/licenses/mit/) license `:~)`
