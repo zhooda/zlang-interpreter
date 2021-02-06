@@ -1,10 +1,14 @@
 package ast
 
-import "zlang/token"
+import (
+	"bytes"
+	"zlang/token"
+)
 
 // Node requires every node to provide a token literal
 type Node interface {
 	TokenLiteral() string
+	String() string
 }
 
 // Statement is a statement node
@@ -32,6 +36,17 @@ func (p *Program) TokenLiteral() string {
 	return ""
 }
 
+// String returns String() from each node in Program
+func (p *Program) String() string {
+	var out bytes.Buffer
+
+	for _, s := range p.Statements {
+		out.WriteString(s.String())
+	}
+
+	return out.String()
+}
+
 // LetStatement is a let statement node (let a = 1;)
 type LetStatement struct {
 	Token token.Token
@@ -44,16 +59,21 @@ func (ls *LetStatement) statementNode() {}
 // TokenLiteral returns token literal for let statement
 func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal }
 
-// Identifier is an identifier node
-type Identifier struct {
-	Token token.Token
-	Value string
+// String stringifies LetStatement node
+func (ls *LetStatement) String() string {
+	var out bytes.Buffer
+
+	out.WriteString(ls.TokenLiteral() + " ")
+	out.WriteString(ls.Name.String())
+	out.WriteString(" = ")
+
+	if ls.Value != nil {
+		out.WriteString(ls.Value.String())
+	}
+	out.WriteString(";")
+
+	return out.String()
 }
-
-func (i *Identifier) expressionNode() {}
-
-// TokenLiteral returns a token literal for identifier
-func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
 
 // ReturnStatement is a return statement node
 type ReturnStatement struct {
@@ -65,3 +85,51 @@ func (rs *ReturnStatement) statementNode() {}
 
 // TokenLiteral returns a token literal for return statement
 func (rs *ReturnStatement) TokenLiteral() string { return rs.Token.Literal }
+
+// String stringifies a return statement
+func (rs *ReturnStatement) String() string {
+	var out bytes.Buffer
+
+	out.WriteString(rs.TokenLiteral() + " ")
+
+	if rs.ReturnValue != nil {
+		out.WriteString(rs.ReturnValue.String())
+	}
+
+	out.WriteString(";")
+
+	return out.String()
+}
+
+// ExpressionStatement is an expression statement node
+type ExpressionStatement struct {
+	Token      token.Token
+	Expression Expression
+}
+
+func (es *ExpressionStatement) statementNode() {}
+
+// TokenLiteral returns a token literal for expression statement
+func (es *ExpressionStatement) TokenLiteral() string { return es.Token.Literal }
+
+// String stringifies an expression statement
+func (es *ExpressionStatement) String() string {
+	if es.Expression != nil {
+		return es.Expression.String()
+	}
+	return ""
+}
+
+// Identifier is an identifier node
+type Identifier struct {
+	Token token.Token
+	Value string
+}
+
+func (i *Identifier) expressionNode() {}
+
+// TokenLiteral returns a token literal for identifier
+func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
+
+// String returns identifier value
+func (i *Identifier) String() string { return i.Value }
