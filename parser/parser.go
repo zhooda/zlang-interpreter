@@ -3,7 +3,6 @@ package parser
 import (
 	"fmt"
 	"strconv"
-
 	"zlang/ast"
 	"zlang/lexer"
 	"zlang/token"
@@ -140,7 +139,7 @@ func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
 
 	stmt.ReturnValue = p.parseExpression(LOWEST)
 
-	for !p.curTokenIs(token.SEMICOLON) {
+	for p.curTokenIs(token.SEMICOLON) {
 		p.nextToken()
 	}
 
@@ -164,7 +163,7 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
 
 	stmt.Value = p.parseExpression(LOWEST)
 
-	for !p.curTokenIs(token.SEMICOLON) {
+	for p.curTokenIs(token.SEMICOLON) {
 		p.nextToken()
 	}
 
