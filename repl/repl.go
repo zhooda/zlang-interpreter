@@ -9,7 +9,7 @@ import (
 )
 
 // PROMPT is the repl prompt
-const PROMPT = "z> "
+const PROMPT = "\u25b7 "
 
 // Start will start the repl
 func Start(in io.Reader, out io.Writer) {
