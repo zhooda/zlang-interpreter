@@ -59,11 +59,23 @@ When running abc2 on windows using the commands outlined below, replace `./bin/z
 
 After you've compiled the program with the instructions above, you can start the repl/shell with the following command:
 
-```bash
+```
 $ ./bin/z
-hello bob, welcome to z
-type some commands
-z>
+z 0.1.0 (v0.1.0:-f423f, 02/07/2020)
+[go version go1.15.8]
+
+hello $USER, type some commands
+▷ let x = 1 * 2 * 3 / 4 * 5 + 6 - 7
+let x = ((((((1 * 2) * 3) / 4) * 5) + 6) - 7);
+▷ x * y / 2 + 3 * 8 - 123
+((((x * y) / 2) + (3 * 8)) - 123)
+▷ true == false
+(true == false)
+▷ let x 12 * 3
+we ran into some issues here!
+ parser errors:
+        expected next token to be =, got INT instead
+▷ 
 ```
 
 ## License
