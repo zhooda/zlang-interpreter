@@ -336,3 +336,55 @@ func (sl *StringLiteral) TokenLiteral() string { return sl.Token.Literal }
 
 // String stringifies a string literal
 func (sl *StringLiteral) String() string { return sl.Token.Literal }
+
+// ArrayLiteral is an array node
+type ArrayLiteral struct {
+	Token    token.Token
+	Elements []Expression
+}
+
+func (al *ArrayLiteral) expressionNode() {}
+
+// TokenLiteral returns a token literal for array literal
+func (al *ArrayLiteral) TokenLiteral() string { return al.Token.Literal }
+
+// String stringifies an array literal
+func (al *ArrayLiteral) String() string {
+	var out bytes.Buffer
+
+	elements := []string{}
+	for _, el := range al.Elements {
+		elements = append(elements, el.String())
+	}
+
+	out.WriteString("[")
+	out.WriteString(strings.Join(elements, ", "))
+	out.WriteString("]")
+
+	return out.String()
+}
+
+// IndexExpression is an index expression node
+type IndexExpression struct {
+	Token token.Token
+	Left  Expression
+	Index Expression
+}
+
+func (ie *IndexExpression) expressionNode() {}
+
+// TokenLiteral returns a token literal for index expression
+func (ie *IndexExpression) TokenLiteral() string { return ie.Token.Literal }
+
+// String stringifies an index expression
+func (ie *IndexExpression) String() string {
+	var out bytes.Buffer
+
+	out.WriteString("(")
+	out.WriteString(ie.Left.String())
+	out.WriteString("[")
+	out.WriteString(ie.Index.String())
+	out.WriteString("])")
+
+	return out.String()
+}
