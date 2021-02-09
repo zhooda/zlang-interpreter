@@ -434,11 +434,11 @@ func TestArrayIndexExpressions(t *testing.T) {
 		},
 		{
 			"[1, 2, 3][3]",
-			nil,
+			"index 3 out of range",
 		},
 		{
 			"[1, 2, 3][-1]",
-			nil,
+			"index -1 out of range",
 		},
 	}
 
