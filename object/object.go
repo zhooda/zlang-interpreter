@@ -18,6 +18,7 @@ const (
 	ERROR_OBJ        = "ERROR"
 	FUNCTION_OBJ     = "FUNCTION"
 	STRING_OBJ       = "STRING"
+	BUILTIN_OBJ      = "BUILTIN"
 )
 
 // Object is the base for all types
@@ -118,3 +119,17 @@ func (s *String) Type() ObjectType { return STRING_OBJ }
 
 // Inspect returns string as string
 func (s *String) Inspect() string { return s.Value }
+
+// BuiltinFunction is a built in function type
+type BuiltinFunction func(args ...Object) Object
+
+// Builtin is a BuiltinFunction wrapper type
+type Builtin struct {
+	Fn BuiltinFunction
+}
+
+// Type returns object type of builtin
+func (b *Builtin) Type() ObjectType { return BUILTIN_OBJ }
+
+// Inspect returns builtin string
+func (b *Builtin) Inspect() string { return "builtin function" }
