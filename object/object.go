@@ -17,6 +17,7 @@ const (
 	RETURN_VALUE_OBJ = "RETURN_VALUE"
 	ERROR_OBJ        = "ERROR"
 	FUNCTION_OBJ     = "FUNCTION"
+	STRING_OBJ       = "STRING"
 )
 
 // Object is the base for all types
@@ -106,3 +107,14 @@ func (f *Function) Inspect() string {
 
 	return out.String()
 }
+
+// String is a string type
+type String struct {
+	Value string
+}
+
+// Type returns object type of string
+func (s *String) Type() ObjectType { return STRING_OBJ }
+
+// Inspect returns string as string
+func (s *String) Inspect() string { return s.Value }
