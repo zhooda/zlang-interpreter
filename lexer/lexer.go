@@ -1,6 +1,7 @@
 package lexer
 
 import (
+	"strings"
 	"zlang/token"
 )
 
@@ -14,7 +15,19 @@ type Lexer struct {
 
 // New returns a pointer to a new Lexer
 func New(input string) *Lexer {
-	l := &Lexer{input: input}
+
+	var i = strings.Split(input, "\n")
+
+	for idx, line := range i {
+		if strings.HasPrefix(strings.TrimSpace(line), "//") {
+			i[idx] = ""
+		} else if strings.Contains(line, "//") {
+			stop := strings.Index(line, "//")
+			i[idx] = i[idx][0:stop]
+		}
+	}
+
+	l := &Lexer{input: strings.Join(i, "\n")}
 	l.readChar()
 	return l
 }
@@ -72,13 +85,7 @@ func (l *Lexer) NextToken() token.Token {
 			tok = newToken(token.BANG, l.ch)
 		}
 	case '/':
-		if l.peekChar() == '*' {
-			l.readChar()
-			tok.Type = token.COMMENT
-			tok.Literal = l.readComment()
-		} else {
-			tok = newToken(token.SLASH, l.ch)
-		}
+		tok = newToken(token.SLASH, l.ch)
 	case '*':
 		tok = newToken(token.ASTERISK, l.ch)
 	case '<':
@@ -170,18 +177,6 @@ func (l *Lexer) readString() string {
 	for {
 		l.readChar()
 		if l.ch == '"' || l.ch == 0 {
-			break
-		}
-	}
-	return l.input[position:l.position]
-}
-
-func (l *Lexer) readComment() string {
-	position := l.position
-	for {
-		l.readChar()
-		if l.ch == '*' && l.peekChar() == '/' {
-			l.readChar()
 			break
 		}
 	}
