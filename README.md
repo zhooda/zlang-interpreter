@@ -57,25 +57,43 @@ When running abc2 on windows using the commands outlined below, replace `./bin/z
 
 ### Usage
 
-After you've compiled the program with the instructions above, you can start the repl/shell with the following command:
+After you've compiled the program with the instructions above, you can start the repl/shell or you can run a program from a .z file!
+
+File:
+```
+$ ./bin/z example.z
+3 is greater than 2 
+hello bob 
+length of arr: 5. 
+arr: [1, 2, 3, 4, 5]. 
+arr is of type: ARRAY 
+
+BOOLEAN 
+STRING 
+INTEGER 
+bruh moment: wrong number of arguments. got=0, want=1
+```
+
+REPL:
 
 ```
 $ ./bin/z
-z 0.1.0 (v0.1.0:-f423f, 02/07/2020)
+z 0.1.0 (v0.1.0:0x000047, 02/07/2020)
 [go version go1.15.8]
 
-hello $USER, type some commands
+hello zeeshanhooda, type some commands
 ▷ let x = 1 * 2 * 3 / 4 * 5 + 6 - 7
-let x = ((((((1 * 2) * 3) / 4) * 5) + 6) - 7);
 ▷ x * y / 2 + 3 * 8 - 123
-((((x * y) / 2) + (3 * 8)) - 123)
+bruh moment: identifier not found: y
+▷ let y = 5
+▷ x * y / 2 + 3 * 8 - 123
+-89
 ▷ true == false
-(true == false)
+false
 ▷ let x 12 * 3
 we ran into some issues here!
  parser errors:
         expected next token to be =, got INT instead
-▷ 
 ```
 
 ## License
