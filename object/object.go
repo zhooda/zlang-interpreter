@@ -59,6 +59,15 @@ func (n *Null) Type() ObjectType { return NULL_OBJ }
 // Inspect returns null as string
 func (n *Null) Inspect() string { return "null" }
 
+// None is an empty type
+type None struct{}
+
+// Type returns object type of none
+func (n *None) Type() ObjectType { return NULL_OBJ }
+
+// Inspect returns none as string
+func (n *None) Inspect() string { return "" }
+
 // ReturnValue is a return value type
 type ReturnValue struct {
 	Value Object

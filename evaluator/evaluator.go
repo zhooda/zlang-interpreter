@@ -8,6 +8,7 @@ import (
 
 var (
 	NULL  = &object.Null{}
+	NONE  = &object.None{}
 	TRUE  = &object.Boolean{Value: true}
 	FALSE = &object.Boolean{Value: false}
 )

@@ -44,6 +44,8 @@ func main() {
 		program := p.ParseProgram()
 
 		evaluated := evaluator.Eval(program, env)
-		fmt.Println(evaluated.Inspect())
+		if evaluated.Inspect() != "" {
+			fmt.Println(evaluated.Inspect())
+		}
 	}
 }
