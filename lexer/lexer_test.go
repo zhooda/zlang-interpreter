@@ -16,7 +16,6 @@ let add = fn(x, y) {
 };
 
 let result = add(five, ten);
-!-/*5;
 5 < 10 > 5;
 
 if (5 < 10) {
@@ -73,12 +72,6 @@ if (5 < 10) {
 		{token.COMMA, ","},
 		{token.IDENT, "ten"},
 		{token.RPAREN, ")"},
-		{token.SEMICOLON, ";"},
-		{token.BANG, "!"},
-		{token.MINUS, "-"},
-		{token.SLASH, "/"},
-		{token.ASTERISK, "*"},
-		{token.INT, "5"},
 		{token.SEMICOLON, ";"},
 		{token.INT, "5"},
 		{token.LT, "<"},

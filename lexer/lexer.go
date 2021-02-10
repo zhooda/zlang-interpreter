@@ -72,7 +72,13 @@ func (l *Lexer) NextToken() token.Token {
 			tok = newToken(token.BANG, l.ch)
 		}
 	case '/':
-		tok = newToken(token.SLASH, l.ch)
+		if l.peekChar() == '*' {
+			l.readChar()
+			tok.Type = token.COMMENT
+			tok.Literal = l.readComment()
+		} else {
+			tok = newToken(token.SLASH, l.ch)
+		}
 	case '*':
 		tok = newToken(token.ASTERISK, l.ch)
 	case '<':
@@ -164,6 +170,18 @@ func (l *Lexer) readString() string {
 	for {
 		l.readChar()
 		if l.ch == '"' || l.ch == 0 {
+			break
+		}
+	}
+	return l.input[position:l.position]
+}
+
+func (l *Lexer) readComment() string {
+	position := l.position
+	for {
+		l.readChar()
+		if l.ch == '*' && l.peekChar() == '/' {
+			l.readChar()
 			break
 		}
 	}
