@@ -1,0 +1,30 @@
+let a = 1;
+let b = 2;
+let c = a + b;
+
+if (c > b) {
+    print(c, "is greater than", b);
+} else {
+    print(c, "is not greater than". b);
+}
+
+let newGreeter = fn(greeting) {
+    return fn(name) {
+        print(greeting, name)
+    };
+}
+
+let hello = newGreeter("hello")
+hello("bob")
+
+let arr = [1, 2, 3, 4, 5]
+print("length of arr:", str(len(arr)) + ".")
+print("arr:", str(arr) + ".")
+print("arr is of type:", type(arr))
+
+print()
+
+print(type(c > b))
+print(type("hello, world"))
+print(type(100))
+print(type())
