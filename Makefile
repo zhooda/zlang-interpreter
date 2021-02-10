@@ -1,6 +1,6 @@
 BUILD_DIR=./bin
 EXEC=z
-VERSION=0.1.0
+VERSION=0.1.1
 
 build:
 	date >> logs/build_log.txt
@@ -14,8 +14,12 @@ test:
 	date >> logs/build_log.txt
 	go test ./...
 
+version:
+	python3 logs/build_string.py logs/build_log.txt main.go $(VERSION)
+
 release:
 	rm -rf $(BUILD_DIR)
+	python3 logs/build_string.py logs/build_log.txt main.go $(VERSION)
 	go test ./...
 	GOOS=linux GOARCH=amd64 go build -v -o $(BUILD_DIR)/linux_amd64/$(EXEC)
 	GOOS=linux GOARCH=arm64 go build -v -o $(BUILD_DIR)/linux_arm64/$(EXEC)

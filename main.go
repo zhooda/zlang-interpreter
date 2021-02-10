@@ -14,9 +14,9 @@ import (
 )
 
 const (
-	version     = "0.1.0"
-	buildString = "0x00005c"
-	buildDate   = "02/07/2020"
+	version     = "0.1.1"
+	buildString = "0x000078"
+	buildDate   = "2021-02-10"
 	goVersion   = "go version go1.15.8"
 )
 

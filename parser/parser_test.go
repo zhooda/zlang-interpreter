@@ -205,6 +205,8 @@ func TestParsingInfixExpressions(t *testing.T) {
 		{"foobar / barfoo;", "foobar", "/", "barfoo"},
 		{"foobar > barfoo;", "foobar", ">", "barfoo"},
 		{"foobar < barfoo;", "foobar", "<", "barfoo"},
+		{"foobar >= barfoo", "foobar", ">=", "barfoo"},
+		{"foobar <= barfoo", "foobar", "<=", "barfoo"},
 		{"foobar == barfoo;", "foobar", "==", "barfoo"},
 		{"foobar != barfoo;", "foobar", "!=", "barfoo"},
 		{"true == true", true, "==", true},
