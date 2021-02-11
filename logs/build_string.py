@@ -43,7 +43,7 @@ if __name__ == "__main__":
         f.writelines(data)
     
     print("Updated:")
-    print(f"\tsemantic version: {semantic_version}")
+    print(f"\tsemantic version: v{semantic_version}-alpha.{x}")
     print(f"\tbuild string:     {version_string}")
     print(f"\tbuild date:       {build_date}")
     print(f"\tgo version:       {go_version}")

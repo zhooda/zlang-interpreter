@@ -3,6 +3,7 @@ package evaluator
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"zlang/object"
 )
 
@@ -42,20 +43,10 @@ var builtins = map[string]*object.Builtin{
 			return &object.Integer{Value: int64(0)}
 		},
 	},
-	"println": {
-		Fn: func(args ...object.Object) object.Object {
-			for _, arg := range args {
-				fmt.Println(arg.Inspect())
-			}
-
-			return NULL
-		},
-	},
 	"print": {
 		Fn: func(args ...object.Object) object.Object {
 			var str string
 			for _, arg := range args {
-				// fmt.Print(arg.Inspect() + " ")
 				str = str + arg.Inspect() + " "
 			}
 			fmt.Printf("%s\n", str)
@@ -69,6 +60,29 @@ var builtins = map[string]*object.Builtin{
 			}
 
 			return &object.String{Value: args[0].Inspect()}
+		},
+	},
+	"int": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 1 {
+				return newError("wrong number of arguments. got=%d, want=1", len(args))
+			}
+
+			switch arg := args[0].(type) {
+			case *object.Integer:
+				return args[0]
+			case *object.String:
+				if i, err := strconv.ParseInt(arg.Value, 10, 64); err == nil {
+					return &object.Integer{Value: int64(i)}
+				}
+				return newError("could not convert type STRING to INTEGER")
+			case *object.Boolean:
+				if arg == TRUE {
+					return &object.Integer{Value: int64(1)}
+				}
+				return &object.Integer{Value: int64(0)}
+			}
+			return newError("argument to `int` not supported, got %s", args[0].Type())
 		},
 	},
 	"type": {
