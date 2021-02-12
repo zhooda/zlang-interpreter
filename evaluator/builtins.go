@@ -1,6 +1,7 @@
 package evaluator
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"strconv"
@@ -92,6 +93,20 @@ var builtins = map[string]*object.Builtin{
 			}
 
 			return &object.String{Value: string(args[0].Type())}
+		},
+	},
+	"input": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) == 1 {
+				fmt.Fprintf(os.Stdout, args[0].Inspect())
+			}
+
+			scanner := bufio.NewScanner(os.Stdin)
+			scanned := scanner.Scan()
+			if !scanned {
+				return &object.String{Value: ""}
+			}
+			return &object.String{Value: scanner.Text()}
 		},
 	},
 }
