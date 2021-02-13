@@ -158,7 +158,11 @@ func (ao *Array) Inspect() string {
 
 	elements := []string{}
 	for _, e := range ao.Elements {
-		elements = append(elements, e.Inspect())
+		s := e.Inspect()
+		if e.Type() == STRING_OBJ {
+			s = fmt.Sprintf(`"%s"`, e.Inspect())
+		}
+		elements = append(elements, s)
 	}
 
 	out.WriteString("[")
