@@ -109,4 +109,38 @@ var builtins = map[string]*object.Builtin{
 			return &object.String{Value: scanner.Text()}
 		},
 	},
+	"set": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 3 {
+				return newError("wrong number of arguments. got=%d, want=3", len(args))
+			}
+			if args[0].Type() != object.ARRAY_OBJ {
+				return newError("invalid array type. got=%s, want=ARRAY", args[0].Type())
+			}
+			arr := args[0].(*object.Array)
+			if args[1].Type() != object.INTEGER_OBJ {
+				return newError("invalid index type. got=%s. want=INTEGER", args[1].Type())
+			}
+			index := args[1].(*object.Integer)
+			if int(index.Value) >= len(arr.Elements) || index.Value < 0 {
+				return newError("index %d out of range", index.Value)
+			}
+			args[0].(*object.Array).Elements[int(index.Value)] = args[2]
+			return &object.None{}
+		},
+	},
+	"append": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) != 2 {
+				return newError("wrong number of arguments. got=%d, want=2", len(args))
+			}
+			if args[0].Type() != object.ARRAY_OBJ {
+				return newError("invalid array type. got=%s, want=ARRAY", args[0].Type())
+			}
+			elements := args[0].(*object.Array).Elements
+			elements = append(elements, args[1])
+			args[0].(*object.Array).Elements = elements
+			return &object.None{}
+		},
+	},
 }
