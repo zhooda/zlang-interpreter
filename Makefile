@@ -24,6 +24,7 @@ release:
 	GOOS=linux GOARCH=amd64 go build -v -o $(BUILD_DIR)/linux_amd64/$(EXEC)
 	GOOS=linux GOARCH=arm64 go build -v -o $(BUILD_DIR)/linux_arm64/$(EXEC)
 	GOOS=darwin GOARCH=amd64 go build -v -o $(BUILD_DIR)/darwin_amd64/$(EXEC)
+	GOOS=darwin GOARCH=arm64 go1.16rc1 build -v -o $(BUILD_DIR)/darwin_arm64/$(EXEC)
 	GOOS=windows GOARCH=amd64 go build -v -o $(BUILD_DIR)/windows_amd64/$(EXEC).exe
 	zip $(BUILD_DIR)/$(EXEC)$(VERSION)_linux_amd64.zip $(BUILD_DIR)/linux_amd64/*
 	zip $(BUILD_DIR)/$(EXEC)$(VERSION)_linux_arm64.zip $(BUILD_DIR)/linux_arm64/*
