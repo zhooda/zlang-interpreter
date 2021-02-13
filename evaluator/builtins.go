@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"zlang/object"
 )
 
@@ -58,6 +59,9 @@ var builtins = map[string]*object.Builtin{
 		Fn: func(args ...object.Object) object.Object {
 			if len(args) != 1 {
 				return newError("wrong number of arguments. got=%d, want=1", len(args))
+			}
+			if args[0].Type() == object.STRING_OBJ {
+				return args[0]
 			}
 
 			return &object.String{Value: args[0].Inspect()}
@@ -141,6 +145,30 @@ var builtins = map[string]*object.Builtin{
 			elements = append(elements, args[1])
 			args[0].(*object.Array).Elements = elements
 			return NONE
+		},
+	},
+	"split": {
+		Fn: func(args ...object.Object) object.Object {
+			if len(args) > 2 || len(args) < 1 {
+				return newError("wrong number of arguments. got=%d, want=1 or 2", len(args))
+			}
+			sep := " "
+			arr := &object.Array{}
+			if len(args) == 2 {
+				if args[1].Type() != object.STRING_OBJ {
+					return newError("invalid seperator type. got=%s, want=STRING", args[0].Type())
+				}
+				sep = args[1].(*object.String).Value
+			}
+			if args[0].Type() != object.STRING_OBJ {
+				return newError("invalid string type. got=%s, want=STRING", args[0].Type())
+			}
+			str := args[0].(*object.String).Value
+			tempElems := strings.Split(str, sep)
+			for _, elem := range tempElems {
+				arr.Elements = append(arr.Elements, &object.String{Value: elem})
+			}
+			return arr
 		},
 	},
 }
