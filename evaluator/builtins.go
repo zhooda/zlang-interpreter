@@ -126,7 +126,7 @@ var builtins = map[string]*object.Builtin{
 				return newError("index %d out of range", index.Value)
 			}
 			args[0].(*object.Array).Elements[int(index.Value)] = args[2]
-			return &object.None{}
+			return NONE
 		},
 	},
 	"append": {
@@ -140,7 +140,7 @@ var builtins = map[string]*object.Builtin{
 			elements := args[0].(*object.Array).Elements
 			elements = append(elements, args[1])
 			args[0].(*object.Array).Elements = elements
-			return &object.None{}
+			return NONE
 		},
 	},
 }

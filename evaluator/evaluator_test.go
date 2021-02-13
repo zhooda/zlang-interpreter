@@ -358,6 +358,22 @@ func TestBuiltinFunctions(t *testing.T) {
 		{`len("hello world")`, 11},
 		{`len(1)`, "argument to `len` not supported, got INTEGER"},
 		{`len("one", "two")`, "wrong number of arguments. got=2, want=1"},
+		{`int()`, "wrong number of arguments. got=0, want=1"},
+		{`int("string")`, "could not convert type STRING to INTEGER"},
+		{`int([1, 2, 3, 4])`, "argument to `int` not supported, got ARRAY"},
+		{`int(true)`, 1},
+		{`int(false)`, 0},
+		{`int("69")`, 69},
+		{`int(69)`, 69},
+		{`print(10)`, NONE},
+		{`type(10)`, &object.String{Value: "INTEGER"}},
+		{`type([1, 2, 3])`, &object.String{Value: "ARRAY"}},
+		{`type("string")`, &object.String{Value: "STRING"}},
+		{`type()`, "wrong number of arguments. got=0, want=1"},
+		{`str(10)`, &object.String{Value: "10"}},
+		{`str([1, 2, 3, 4])`, &object.String{Value: "[1, 2, 3, 4]"}},
+		{`str(true)`, &object.String{Value: "true"}},
+		{`str()`, "wrong number of arguments. got=0, want=1"},
 	}
 
 	for _, tt := range tests {
@@ -374,6 +390,24 @@ func TestBuiltinFunctions(t *testing.T) {
 			}
 			if errObj.Message != expected {
 				t.Errorf("wrong error message. expected=%q, got=%q", expected, errObj.Message)
+			}
+		case *object.String:
+			str, ok := evaluated.(*object.String)
+			if !ok {
+				t.Errorf("object is not String. got=%T (%+v)", evaluated, evaluated)
+				continue
+			}
+			if str.Value != expected.Value {
+				t.Errorf("wrong return value. expected=%q, got=%q", expected.Value, str.Value)
+			}
+		case *object.None:
+			none, ok := evaluated.(*object.None)
+			if !ok {
+				t.Errorf("object is not None. got=%T (%+v)", evaluated, evaluated)
+				continue
+			}
+			if none.Type() != object.NULL_OBJ {
+				t.Errorf("object is NULL_OBJ. got=%T (%+v)", evaluated.(*object.None), NONE)
 			}
 		}
 	}
