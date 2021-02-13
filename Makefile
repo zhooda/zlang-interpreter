@@ -1,6 +1,6 @@
 BUILD_DIR=./bin
 EXEC=z
-VERSION=0.1.2
+VERSION=0.1.3
 
 build:
 	date >> logs/build_log.txt
