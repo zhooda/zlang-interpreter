@@ -123,8 +123,8 @@ func (l *Lexer) NextToken() token.Token {
 			tok.Type = token.LookupIdent(tok.Literal)
 			return tok
 		} else if isDigit(l.ch) {
-			tok.Type = token.INT
-			tok.Literal = l.readNumber()
+			// tok.Type = token.INT
+			tok.Type, tok.Literal = l.readNumber()
 			return tok
 		} else {
 			tok = newToken(token.ILLEGAL, l.ch)
@@ -148,12 +148,20 @@ func (l *Lexer) peekChar() byte {
 	return l.input[l.readPosition]
 }
 
-func (l *Lexer) readNumber() string {
+func (l *Lexer) readNumber() (token.TokenType, string) {
 	position := l.position
+	var tt token.TokenType = token.INT
 	for isDigit(l.ch) {
 		l.readChar()
 	}
-	return l.input[position:l.position]
+	if l.ch == '.' {
+		l.readChar()
+		for isDigit(l.ch) {
+			l.readChar()
+		}
+		tt = token.FLOAT
+	}
+	return tt, l.input[position:l.position]
 }
 
 func (l *Lexer) readIdentifier() string {

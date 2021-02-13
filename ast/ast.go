@@ -149,6 +149,20 @@ func (il *IntegerLiteral) TokenLiteral() string { return il.Token.Literal }
 // String stringifies an integer literal
 func (il *IntegerLiteral) String() string { return il.Token.Literal }
 
+// FloatLiteral is a float literal node
+type FloatLiteral struct {
+	Token token.Token
+	Value float64
+}
+
+func (fl *FloatLiteral) expressionNode() {}
+
+// TokenLiteral returns a token literal for integer literal
+func (fl *FloatLiteral) TokenLiteral() string { return fl.Token.Literal }
+
+// String stringifies an integer literal
+func (fl *FloatLiteral) String() string { return fl.Token.Literal }
+
 // PrefixExpression is a prefix expression node
 type PrefixExpression struct {
 	Token    token.Token

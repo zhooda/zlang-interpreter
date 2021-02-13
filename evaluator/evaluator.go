@@ -45,6 +45,9 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 	case *ast.IntegerLiteral:
 		return &object.Integer{Value: node.Value}
 
+	case *ast.FloatLiteral:
+		return &object.Float{Value: node.Value}
+
 	case *ast.StringLiteral:
 		return &object.String{Value: node.Value}
 
@@ -196,6 +199,8 @@ func evalInfixExpression(
 	switch {
 	case left.Type() == object.INTEGER_OBJ && right.Type() == object.INTEGER_OBJ:
 		return evalIntegerInfixExpression(operator, left, right)
+	case left.Type() == object.FLOAT_OBJ && right.Type() == object.FLOAT_OBJ:
+		return evalFloatInfixExpression(operator, left, right)
 	case left.Type() == object.STRING_OBJ && right.Type() == object.STRING_OBJ:
 		return evalStringInfixExpression(operator, left, right)
 	case left.Type() != right.Type():
@@ -224,7 +229,40 @@ func evalIntegerInfixExpression(
 	case "*":
 		return &object.Integer{Value: leftVal * rightVal}
 	case "/":
-		return &object.Integer{Value: leftVal / rightVal}
+		return &object.Float{Value: float64(leftVal) / float64(rightVal)}
+	case "<":
+		return nativeBoolToBooleanObject(leftVal < rightVal)
+	case ">":
+		return nativeBoolToBooleanObject(leftVal > rightVal)
+	case "==":
+		return nativeBoolToBooleanObject(leftVal == rightVal)
+	case "!=":
+		return nativeBoolToBooleanObject(leftVal != rightVal)
+	case "<=":
+		return nativeBoolToBooleanObject(leftVal <= rightVal)
+	case ">=":
+		return nativeBoolToBooleanObject(leftVal >= rightVal)
+	default:
+		return newError("unknown operator: %s %s %s", left.Type(), operator, right.Type())
+	}
+}
+
+func evalFloatInfixExpression(
+	operator string,
+	left, right object.Object,
+) object.Object {
+	leftVal := left.(*object.Float).Value
+	rightVal := right.(*object.Float).Value
+
+	switch operator {
+	case "+":
+		return &object.Float{Value: leftVal + rightVal}
+	case "-":
+		return &object.Float{Value: leftVal - rightVal}
+	case "*":
+		return &object.Float{Value: leftVal * rightVal}
+	case "/":
+		return &object.Float{Value: leftVal / rightVal}
 	case "<":
 		return nativeBoolToBooleanObject(leftVal < rightVal)
 	case ">":

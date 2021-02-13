@@ -31,6 +31,7 @@ if (5 < 10) {
 [1, 2];
 10 <= 9;
 10 >= 9;
+3.14;
 `
 
 	tests := []struct {
@@ -119,6 +120,8 @@ if (5 < 10) {
 		{token.INT, "10"},
 		{token.GT_EQ, ">="},
 		{token.INT, "9"},
+		{token.SEMICOLON, ";"},
+		{token.FLOAT, "3.14"},
 		{token.SEMICOLON, ";"},
 		{token.EOF, ""},
 	}
