@@ -5,7 +5,7 @@ let c = a + b;
 if (c > b) {
     print(c, "is greater than", b);
 } else {
-    print(c, "is not greater than". b);
+    print(c, "is not greater than", b);
 }
 
 let newGreeter = fn(greeting) {
