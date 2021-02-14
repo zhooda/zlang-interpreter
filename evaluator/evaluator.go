@@ -2,6 +2,7 @@ package evaluator
 
 import (
 	"fmt"
+	"math"
 	"zlang/ast"
 	"zlang/object"
 )
@@ -229,7 +230,10 @@ func evalIntegerInfixExpression(
 	case "*":
 		return &object.Integer{Value: leftVal * rightVal}
 	case "/":
-		return &object.Float{Value: float64(leftVal) / float64(rightVal)}
+		return &object.Integer{Value: leftVal / rightVal}
+		// return &object.Float{Value: float64(leftVal) / float64(rightVal)}
+	case "%":
+		return &object.Integer{Value: leftVal % rightVal}
 	case "<":
 		return nativeBoolToBooleanObject(leftVal < rightVal)
 	case ">":
@@ -263,6 +267,8 @@ func evalFloatInfixExpression(
 		return &object.Float{Value: leftVal * rightVal}
 	case "/":
 		return &object.Float{Value: leftVal / rightVal}
+	case "%":
+		return &object.Float{Value: math.Remainder(leftVal, rightVal)}
 	case "<":
 		return nativeBoolToBooleanObject(leftVal < rightVal)
 	case ">":

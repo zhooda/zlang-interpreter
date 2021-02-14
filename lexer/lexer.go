@@ -88,6 +88,8 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.SLASH, l.ch)
 	case '*':
 		tok = newToken(token.ASTERISK, l.ch)
+	case '%':
+		tok = newToken(token.PERCENT, l.ch)
 	case '<':
 		if l.peekChar() == '=' {
 			ch := l.ch
