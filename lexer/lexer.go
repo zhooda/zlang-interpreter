@@ -76,6 +76,10 @@ func (l *Lexer) NextToken() token.Token {
 			l.skipSingleLineComment()
 			return l.NextToken()
 		}
+		if l.peekChar() == '*' {
+			l.skipMultiLineComment()
+			return l.NextToken()
+		}
 		tok = newToken(token.SLASH, l.ch)
 	case '*':
 		tok = newToken(token.ASTERISK, l.ch)
@@ -138,6 +142,25 @@ func (l *Lexer) skipSingleLineComment() {
 	for l.ch != '\n' && l.ch != 0 {
 		l.readChar()
 	}
+	l.skipWhitespace()
+}
+
+func (l *Lexer) skipMultiLineComment() {
+	isEnd := false
+
+	for !isEnd {
+		if l.ch == 0 {
+			isEnd = true
+		}
+
+		if l.ch == '*' && l.peekChar() == '/' {
+			isEnd = true
+			l.readChar()
+		}
+
+		l.readChar()
+	}
+
 	l.skipWhitespace()
 }
 

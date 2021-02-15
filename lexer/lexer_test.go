@@ -33,6 +33,9 @@ if (5 < 10) {
 10 >= 9;
 3.14;
 5 % 2;
+// this is a single line comment
+/* this is a multi 
+line comment */
 `
 
 	tests := []struct {

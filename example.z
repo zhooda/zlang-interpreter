@@ -26,10 +26,10 @@ print("arr is of type:", type(arr));
 
 print();
 
-// print(type(c > b))
-//print(type("hello, world"))
-//print(type(100))
-//print(type())
+/* print(type(c > b))
+print(type("hello, world"))
+print(type(100))
+print(type()) */
 
 let inputTest = input("type something > ")
 print(inputTest)
