@@ -1,7 +1,6 @@
 package lexer
 
 import (
-	"strings"
 	"zlang/token"
 )
 
@@ -15,19 +14,7 @@ type Lexer struct {
 
 // New returns a pointer to a new Lexer
 func New(input string) *Lexer {
-
-	var i = strings.Split(input, "\n")
-
-	for idx, line := range i {
-		if strings.HasPrefix(strings.TrimSpace(line), "//") {
-			i[idx] = ""
-		} else if strings.Contains(line, "//") {
-			stop := strings.Index(line, "//")
-			i[idx] = i[idx][0:stop]
-		}
-	}
-
-	l := &Lexer{input: strings.Join(i, "\n")}
+	l := &Lexer{input: input}
 	l.readChar()
 	return l
 }
@@ -85,6 +72,10 @@ func (l *Lexer) NextToken() token.Token {
 			tok = newToken(token.BANG, l.ch)
 		}
 	case '/':
+		if l.peekChar() == '/' {
+			l.skipSingleLineComment()
+			return l.NextToken()
+		}
 		tok = newToken(token.SLASH, l.ch)
 	case '*':
 		tok = newToken(token.ASTERISK, l.ch)
@@ -141,6 +132,13 @@ func (l *Lexer) skipWhitespace() {
 	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
 		l.readChar()
 	}
+}
+
+func (l *Lexer) skipSingleLineComment() {
+	for l.ch != '\n' && l.ch != 0 {
+		l.readChar()
+	}
+	l.skipWhitespace()
 }
 
 func (l *Lexer) peekChar() byte {
