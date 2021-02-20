@@ -33,6 +33,7 @@ if (5 < 10) {
 10 >= 9;
 3.14;
 5 % 2;
+{"foo": "bar"}
 // this is a single line comment
 /* this is a multi 
 line comment */
@@ -131,6 +132,11 @@ line comment */
 		{token.PERCENT, "%"},
 		{token.INT, "2"},
 		{token.SEMICOLON, ";"},
+		{token.LBRACE, "{"},
+		{token.STRING, "foo"},
+		{token.COLON, ":"},
+		{token.STRING, "bar"},
+		{token.RBRACE, "}"},
 		{token.EOF, ""},
 	}
 
